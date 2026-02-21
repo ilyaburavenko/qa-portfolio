@@ -1,0 +1,373 @@
+{
+  "info": {
+    "_postman_id": "f513f16a-6d7e-4188-9bf6-90a31211129b",
+    "name": "Pokemom API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Создать",
+      "id": "f1209e13-1de2-419a-a8e7-0f6c1e05016b",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "trainer_token",
+            "value": "d1ec86e736bf2ab67518fe758cb255dd",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"name\": \"generate\",\r\n    \"photo_id\": -1\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://api.pokemonbattle.ru/v2/pokemons",
+          "protocol": "https",
+          "host": [
+            "api",
+            "pokemonbattle",
+            "ru"
+          ],
+          "path": [
+            "v2",
+            "pokemons"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Список покемонов",
+      "id": "71a4ef22-c338-4f5b-8058-762d066533d6",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "trainer_token",
+            "value": "d1ec86e736bf2ab67518fe758cb255dd",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"name\": \"generate\",\r\n    \"photo_id\": -1\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://api.pokemonbattle.ru/v2/pokemons?attack=1&stage=1&in_pokeball=1&status=1",
+          "protocol": "https",
+          "host": [
+            "api",
+            "pokemonbattle",
+            "ru"
+          ],
+          "path": [
+            "v2",
+            "pokemons"
+          ],
+          "query": [
+            {
+              "key": "trainer_id",
+              "value": "25446",
+              "disabled": true
+            },
+            {
+              "key": "attack",
+              "value": "1"
+            },
+            {
+              "key": "stage",
+              "value": "1"
+            },
+            {
+              "key": "in_pokeball",
+              "value": "1"
+            },
+            {
+              "key": "status",
+              "value": "1"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Список моих покемонов",
+      "id": "9ebb0261-9b65-4961-8abc-92c77bec5bff",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "trainer_token",
+            "value": "d1ec86e736bf2ab67518fe758cb255dd",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"name\": \"generate\",\r\n    \"photo_id\": -1\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://api.pokemonbattle.ru/v2/pokemons?trainer_id=25446&status=1",
+          "protocol": "https",
+          "host": [
+            "api",
+            "pokemonbattle",
+            "ru"
+          ],
+          "path": [
+            "v2",
+            "pokemons"
+          ],
+          "query": [
+            {
+              "key": "trainer_id",
+              "value": "25446"
+            },
+            {
+              "key": "status",
+              "value": "1"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Поймать",
+      "id": "405751d7-d533-4742-a3b9-ae074834a587",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "trainer_token",
+            "value": "d1ec86e736bf2ab67518fe758cb255dd",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"pokemon_id\": \"195696\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://api.pokemonbattle.ru/v2/trainers/add_pokeball",
+          "protocol": "https",
+          "host": [
+            "api",
+            "pokemonbattle",
+            "ru"
+          ],
+          "path": [
+            "v2",
+            "trainers",
+            "add_pokeball"
+          ],
+          "query": [
+            {
+              "key": "in_pokeball",
+              "value": "1",
+              "disabled": true
+            },
+            {
+              "key": "attack",
+              "value": "1",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Атаковать",
+      "id": "22598957-5a89-4537-9324-f130fcf44c28",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "trainer_token",
+            "value": "d1ec86e736bf2ab67518fe758cb255dd",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"attacking_pokemon\": \"195701\",\r\n    \"defending_pokemon\": \"195731\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://api.pokemonbattle.ru/v2/battle",
+          "protocol": "https",
+          "host": [
+            "api",
+            "pokemonbattle",
+            "ru"
+          ],
+          "path": [
+            "v2",
+            "battle"
+          ],
+          "query": [
+            {
+              "key": "in_pokeball",
+              "value": "1",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Лавка",
+      "id": "528110d3-abd9-46fe-abe7-09ca183526cb",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "trainer_token",
+            "value": "d1ec86e736bf2ab67518fe758cb255dd",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"order_type\": \"avatar\",\r\n    \"details\": {\r\n        \"avatar_id\": \"11\", \r\n        \"card_number\": \"4111111111111111\",\r\n        \"card_name\": \"вв\",\r\n        \"card_actual\": \"10/25\",\r\n        \"card_cvv\": \"125\",\r\n        \"secure_code\": \"56456\"\r\n    }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://lavka.pokemonbattle.ru/payments",
+          "protocol": "https",
+          "host": [
+            "lavka",
+            "pokemonbattle",
+            "ru"
+          ],
+          "path": [
+            "payments"
+          ],
+          "query": [
+            {
+              "key": "",
+              "value": null,
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "в нокаут",
+      "id": "360bf11a-a79d-44d5-9950-e1cd7e581853",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "trainer_token",
+            "value": "d1ec86e736bf2ab67518fe758cb255dd",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"pokemon_id\": \"194718\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "https://api.pokemonbattle.ru/v2/pokemons/knockout",
+          "protocol": "https",
+          "host": [
+            "api",
+            "pokemonbattle",
+            "ru"
+          ],
+          "path": [
+            "v2",
+            "pokemons",
+            "knockout"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "New Request",
+      "id": "af7d717a-44d4-4b2a-90c6-31e79fcb8e69",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    }
+  ]
+}

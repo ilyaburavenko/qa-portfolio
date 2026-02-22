@@ -365,7 +365,10 @@
       "id": "af7d717a-44d4-4b2a-90c6-31e79fcb8e69",
       "request": {
         "method": "GET",
-        "header": []
+        "header": [],
+        "url": {
+          "raw": ""
+        }
       },
       "response": []
     }

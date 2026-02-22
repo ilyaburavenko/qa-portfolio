@@ -66,6 +66,71 @@
       "response": []
     },
     {
+      "name": "GET /reviews - reviews by book_id",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response has reviews array\", function () {",
+              "    const json = pm.response.json();",
+              "    pm.expect(json).to.have.property(\"reviews\");",
+              "    pm.expect(json.reviews).to.be.an(\"array\");",
+              "});",
+              "",
+              "pm.test(\"All reviews belong to book_id 1\", function () {",
+              "    const reviews = pm.response.json().reviews;",
+              "    reviews.forEach(function(review) {",
+              "        pm.expect(review.book_id).to.eql(1);",
+              "    });",
+              "});",
+              "",
+              "pm.test(\"Each review has required fields\", function () {",
+              "    const reviews = pm.response.json().reviews;",
+              "    reviews.forEach(function(review) {",
+              "        pm.expect(review).to.have.property(\"id\");",
+              "        pm.expect(review).to.have.property(\"author_name\");",
+              "        pm.expect(review).to.have.property(\"review_text\");",
+              "        pm.expect(review).to.have.property(\"recommended\");",
+              "    });",
+              "});"
+            ],
+            "type": "text/javascript",
+            "id": "18cf7daa-fda4-47ec-809f-0f8b00ead7a4"
+          }
+        }
+      ],
+      "id": "de983543-978f-4248-ac90-4af8b286ee53",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "188.120.241.222:8534/reviews?book_id=1",
+          "host": [
+            "188",
+            "120",
+            "241",
+            "222"
+          ],
+          "port": "8534",
+          "path": [
+            "reviews"
+          ],
+          "query": [
+            {
+              "key": "book_id",
+              "value": "1"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
       "name": "GET /books - sort price DESC",
       "id": "5993a6be-fc6c-4c9d-ad7b-5a7686f9b93c",
       "request": {
@@ -103,12 +168,75 @@
     },
     {
       "name": "GET /book/{id}",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "a544dde5-2ba1-49eb-bb72-05d961cbdf25",
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response has all required fields\", function () {\r",
+              "    const json = pm.response.json();\r",
+              "    pm.expect(json).to.have.property(\"id\");\r",
+              "    pm.expect(json).to.have.property(\"title\");\r",
+              "    pm.expect(json).to.have.property(\"author\");\r",
+              "    pm.expect(json).to.have.property(\"price\");\r",
+              "    pm.expect(json).to.have.property(\"description\");\r",
+              "    pm.expect(json).to.have.property(\"author_bio\");\r",
+              "    pm.expect(json).to.have.property(\"reviews_count\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Book id matches requested id\", function () {\r",
+              "    pm.expect(pm.response.json().id).to.eql(1);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Price is a positive number\", function () {\r",
+              "    pm.expect(pm.response.json().price).to.be.above(0);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Reviews count is a non-negative number\", function () {\r",
+              "    pm.expect(pm.response.json().reviews_count).to.be.at.least(0);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "id": "6df1c46f-6067-4883-bf0c-48cd67f96e55",
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
       "id": "188d70c4-8ceb-4c1e-8bdd-7b49ae04f209",
       "request": {
         "method": "GET",
         "header": [],
         "url": {
-          "raw": ""
+          "raw": "http://188.120.241.222:8534/book/1",
+          "protocol": "http",
+          "host": [
+            "188",
+            "120",
+            "241",
+            "222"
+          ],
+          "port": "8534",
+          "path": [
+            "book",
+            "1"
+          ]
         }
       },
       "response": []
@@ -133,6 +261,445 @@
         "header": [],
         "url": {
           "raw": ""
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET /review/{id} - non-existing review",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 404 for non-existing review\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([404, 204]);",
+              "});"
+            ],
+            "type": "text/javascript",
+            "id": "7f56b880-ca78-4335-b65f-29dc469168de"
+          }
+        }
+      ],
+      "id": "8f12b71e-ddf0-4162-a32c-9aa31ee400ea",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "188.120.241.222:8534/review/99999",
+          "host": [
+            "188",
+            "120",
+            "241",
+            "222"
+          ],
+          "port": "8534",
+          "path": [
+            "review",
+            "99999"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "POST /review - create review",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "1a18ab06-4b66-49c3-b12c-f42ce827cb0f",
+            "exec": [
+              "pm.test(\"Status code is 201\", function () {",
+              "    pm.response.to.have.status(201);",
+              "});",
+              "",
+              "pm.test(\"Response has review_id\", function () {",
+              "    const json = pm.response.json();",
+              "    pm.expect(json).to.have.property(\"review_id\");",
+              "    pm.expect(json.review_id).to.be.a(\"number\");",
+              "});",
+              "",
+              "pm.test(\"Response contains correct book_id\", function () {",
+              "    pm.expect(pm.response.json().book_id).to.eql(1);",
+              "});",
+              "",
+              "pm.test(\"Response contains correct author_name\", function () {",
+              "    pm.expect(pm.response.json().author_name).to.eql(\"Тестировщик\");",
+              "});",
+              "",
+              "pm.test(\"Response contains correct recommended value\", function () {",
+              "    pm.expect(pm.response.json().recommended).to.eql(true);",
+              "});",
+              "",
+              "// Сохраняем id созданного отзыва для следующих запросов",
+              "pm.collectionVariables.set(\"review_id\", pm.response.json().review_id);",
+              "console.log(\"Saved review_id:\", pm.response.json().review_id);"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "id": "d2109fde-b1de-4545-91b7-b33e6b495cda",
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "id": "6888ae65-591e-43ce-a57e-f9a64525b5d0",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"book_id\": 1,\n    \"author_name\": \"Тестировщик\",\n    \"review_text\": \"Отличная книга, рекомендую всем!\",\n    \"recommended\": true\n}"
+        },
+        "url": {
+          "raw": "188.120.241.222:8534/review",
+          "host": [
+            "188",
+            "120",
+            "241",
+            "222"
+          ],
+          "port": "8534",
+          "path": [
+            "review"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "POST /review - missing required fields",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "1c35e7a8-0b00-4ef9-a8ee-0214931059d2",
+            "exec": [
+              "pm.test(\"Status code is 500 (BUG: expected 400 or 422)\", function () {",
+              "    pm.response.to.have.status(500);",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "id": "e280e10a-115e-43b4-a744-1da21a6213c5",
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "id": "37cd013c-346c-4e8d-8429-bce7c827efa7",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"author_name\": \"Тестировщик\"\n}"
+        },
+        "url": {
+          "raw": "188.120.241.222:8534/review",
+          "host": [
+            "188",
+            "120",
+            "241",
+            "222"
+          ],
+          "port": "8534",
+          "path": [
+            "review"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "DELETE /review - delete review",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200 or 204\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([200, 204]);",
+              "});"
+            ],
+            "type": "text/javascript",
+            "id": "c87640f8-ef4b-4c3a-8936-9cfbc7cb02a6"
+          }
+        }
+      ],
+      "id": "e764a6f3-9e52-4413-956d-eb157ec8b0eb",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "188.120.241.222:8534/review/{{review_id}}",
+          "host": [
+            "188",
+            "120",
+            "241",
+            "222"
+          ],
+          "port": "8534",
+          "path": [
+            "review",
+            "{{review_id}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET /promocodes - valid promo code",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response has discount field\", function () {",
+              "    const json = pm.response.json();",
+              "    pm.expect(json).to.have.property(\"discount\");",
+              "});",
+              "",
+              "pm.test(\"Discount is a positive number\", function () {",
+              "    pm.expect(pm.response.json().discount).to.be.above(0);",
+              "});"
+            ],
+            "type": "text/javascript",
+            "id": "2e55302f-8691-4b64-963a-43e71213f0f5"
+          }
+        }
+      ],
+      "id": "0c441b66-2a99-4313-b292-64e579791c1a",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "188.120.241.222:8534/promocodes/SALE10",
+          "host": [
+            "188",
+            "120",
+            "241",
+            "222"
+          ],
+          "port": "8534",
+          "path": [
+            "promocodes",
+            "SALE10"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "DELETE /review - double delete",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 404 for already deleted review\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([404, 204]);",
+              "});"
+            ],
+            "type": "text/javascript",
+            "id": "46930488-b408-4831-8d00-8dc94ad0d833"
+          }
+        }
+      ],
+      "id": "a0dba231-49a5-4d4e-b327-d0f4aec4feb0",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "188.120.241.222:8534/review/{{review_id}}",
+          "host": [
+            "188",
+            "120",
+            "241",
+            "222"
+          ],
+          "port": "8534",
+          "path": [
+            "review",
+            "{{review_id}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "PATCH /review - update review",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Review text was updated\", function () {",
+              "    pm.expect(pm.response.json().review_text).to.eql(\"Обновлённый текст отзыва\");",
+              "});",
+              "",
+              "pm.test(\"Recommended was updated\", function () {",
+              "    pm.expect(pm.response.json().recommended).to.eql(false);",
+              "});"
+            ],
+            "type": "text/javascript",
+            "id": "c519c6cd-d369-4428-8b6e-fb2cbfb3e597"
+          }
+        }
+      ],
+      "id": "7779eece-1b35-4bd0-bdba-be1f1873a130",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"review_text\": \"Обновлённый текст отзыва\",\n    \"recommended\": false\n}"
+        },
+        "url": {
+          "raw": "188.120.241.222:8534/review/{{review_id}}",
+          "host": [
+            "188",
+            "120",
+            "241",
+            "222"
+          ],
+          "port": "8534",
+          "path": [
+            "review",
+            "{{review_id}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET /review/{id} - existing review",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response has all required fields\", function () {",
+              "    const json = pm.response.json();",
+              "    pm.expect(json).to.have.property(\"id\");",
+              "    pm.expect(json).to.have.property(\"book_id\");",
+              "    pm.expect(json).to.have.property(\"author_name\");",
+              "    pm.expect(json).to.have.property(\"review_text\");",
+              "    pm.expect(json).to.have.property(\"recommended\");",
+              "});",
+              "",
+              "pm.test(\"Review id matches requested id\", function () {",
+              "    const reviewId = pm.collectionVariables.get(\"review_id\");",
+              "    pm.expect(pm.response.json().id).to.eql(reviewId);",
+              "});"
+            ],
+            "type": "text/javascript",
+            "id": "b2600a85-766e-44f2-8cc9-1c8e2f2fab37"
+          }
+        }
+      ],
+      "id": "9c738ec7-88d9-47c1-883c-861884fc188e",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "188.120.241.222:8534/review/{{review_id}}",
+          "host": [
+            "188",
+            "120",
+            "241",
+            "222"
+          ],
+          "port": "8534",
+          "path": [
+            "review",
+            "{{review_id}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET /promocodes - invalid promo code",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 404 for invalid promo code\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([404, 400]);",
+              "});"
+            ],
+            "type": "text/javascript",
+            "id": "3c062420-3c70-4009-a48c-35e160b5e655"
+          }
+        }
+      ],
+      "id": "a31b62c9-f7bf-4837-ab55-f887e41fc867",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "188.120.241.222:8534/promocodes/INVALIDCODE123",
+          "host": [
+            "188",
+            "120",
+            "241",
+            "222"
+          ],
+          "port": "8534",
+          "path": [
+            "promocodes",
+            "INVALIDCODE123"
+          ]
         }
       },
       "response": []

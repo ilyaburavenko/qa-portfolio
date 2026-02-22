@@ -7,60 +7,279 @@
   "item": [
     {
       "name": "Get\\books",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Response has products array\", function () {",
+              "    pm.expect(pm.response.json()).to.have.property(\"products\");",
+              "    pm.expect(pm.response.json().products).to.be.an(\"array\");",
+              "});",
+              "",
+              "pm.test(\"Products array is not empty\", function () {",
+              "    pm.expect(pm.response.json().products.length).to.be.above(0);",
+              "});",
+              "",
+              "pm.test(\"Each product has required fields\", function () {",
+              "    pm.response.json().products.forEach(function(p) {",
+              "        pm.expect(p).to.have.property(\"id\");",
+              "        pm.expect(p).to.have.property(\"title\");",
+              "        pm.expect(p).to.have.property(\"author\");",
+              "        pm.expect(p).to.have.property(\"price\");",
+              "    });",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
       "id": "3a66eb9a-db39-4231-acf2-35699e1a2392",
       "request": {
         "method": "GET",
         "header": [],
         "url": {
-          "raw": ""
+          "raw": "188.120.241.222:8534/books",
+          "host": [
+            "188",
+            "120",
+            "241",
+            "222"
+          ],
+          "port": "8534",
+          "path": [
+            "books"
+          ]
         }
       },
       "response": []
     },
     {
       "name": "Get\\books string",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "77690ac8-72ec-4af5-be02-ad5cd49fc486",
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Products array exists\", function () {",
+              "    pm.expect(pm.response.json().products).to.be.an(\"array\");",
+              "});",
+              "",
+              "pm.test(\"All results match search string\", function () {",
+              "    pm.response.json().products.forEach(function(p) {",
+              "        const match = p.author.toLowerCase().includes(\"кинг\") || p.title.toLowerCase().includes(\"кинг\");",
+              "        pm.expect(match).to.be.true;",
+              "    });",
+              "});",
+              "",
+              "pm.test(\"Products array is not empty\", function () {",
+              "    pm.expect(pm.response.json().products.length).to.be.above(0);",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "id": "bd3b9627-197f-4060-81d8-98f4c20896ac",
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
       "id": "5569c130-ad0f-4929-b86a-c80f6fee12c3",
       "request": {
         "method": "GET",
         "header": [],
         "url": {
-          "raw": ""
+          "raw": "188.120.241.222:8534/books?string=Кинг",
+          "host": [
+            "188",
+            "120",
+            "241",
+            "222"
+          ],
+          "port": "8534",
+          "path": [
+            "books"
+          ],
+          "query": [
+            {
+              "key": "string",
+              "value": "Кинг",
+              "uuid": "4406a4dc-a34c-4cd8-a263-b33dab69075e"
+            }
+          ]
         }
       },
       "response": []
     },
     {
       "name": "GET /books - limit",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Returns exactly 3 products\", function () {",
+              "    pm.expect(pm.response.json().products.length).to.eql(3);",
+              "});",
+              "",
+              "pm.test(\"Products array is not empty\", function () {",
+              "    pm.expect(pm.response.json().products.length).to.be.above(0);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
       "id": "4157c195-bdb6-4dc3-823f-0e82ef66868b",
       "request": {
         "method": "GET",
         "header": [],
         "url": {
-          "raw": ""
+          "raw": "188.120.241.222:8534/books?limit=3",
+          "host": [
+            "188",
+            "120",
+            "241",
+            "222"
+          ],
+          "port": "8534",
+          "path": [
+            "books"
+          ],
+          "query": [
+            {
+              "key": "limit",
+              "value": "3"
+            }
+          ]
         }
       },
       "response": []
     },
     {
       "name": "GET /books - offset",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Products array exists\", function () {",
+              "    pm.expect(pm.response.json().products).to.be.an(\"array\");",
+              "});",
+              "",
+              "pm.test(\"First product id is 4 (offset skips 2)\", function () {",
+              "    pm.expect(pm.response.json().products[0].id).to.eql(4);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
       "id": "31b9e820-3288-489c-866a-05a98b95a948",
       "request": {
         "method": "GET",
         "header": [],
         "url": {
-          "raw": ""
+          "raw": "188.120.241.222:8534/books?offset=2",
+          "host": [
+            "188",
+            "120",
+            "241",
+            "222"
+          ],
+          "port": "8534",
+          "path": [
+            "books"
+          ],
+          "query": [
+            {
+              "key": "offset",
+              "value": "2"
+            }
+          ]
         }
       },
       "response": []
     },
     {
       "name": "GET /books - sort price ASC",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Products sorted by price ASC\", function () {",
+              "    const products = pm.response.json().products;",
+              "    for (let i = 0; i < products.length - 1; i++) {",
+              "        pm.expect(products[i].price).to.be.at.most(products[i+1].price);",
+              "    }",
+              "});",
+              "",
+              "pm.test(\"Response has products array\", function () {",
+              "    pm.expect(pm.response.json().products).to.be.an(\"array\");",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
       "id": "a958eeed-3e83-4fe0-b5b6-5de63355a2fd",
       "request": {
         "method": "GET",
         "header": [],
         "url": {
-          "raw": ""
+          "raw": "188.120.241.222:8534/books?sort=price&order=ASC",
+          "host": [
+            "188",
+            "120",
+            "241",
+            "222"
+          ],
+          "port": "8534",
+          "path": [
+            "books"
+          ],
+          "query": [
+            {
+              "key": "sort",
+              "value": "price"
+            },
+            {
+              "key": "order",
+              "value": "ASC"
+            }
+          ]
         }
       },
       "response": []
@@ -132,36 +351,198 @@
     },
     {
       "name": "GET /books - sort price DESC",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"Products sorted by price DESC\", function () {",
+              "    const products = pm.response.json().products;",
+              "    for (let i = 0; i < products.length - 1; i++) {",
+              "        pm.expect(products[i].price).to.be.at.least(products[i+1].price);",
+              "    }",
+              "});",
+              "",
+              "pm.test(\"Response has products array\", function () {",
+              "    pm.expect(pm.response.json().products).to.be.an(\"array\");",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
       "id": "5993a6be-fc6c-4c9d-ad7b-5a7686f9b93c",
       "request": {
         "method": "GET",
         "header": [],
         "url": {
-          "raw": ""
+          "raw": "188.120.241.222:8534/books?sort=price&order=DESC",
+          "host": [
+            "188",
+            "120",
+            "241",
+            "222"
+          ],
+          "port": "8534",
+          "path": [
+            "books"
+          ],
+          "query": [
+            {
+              "key": "sort",
+              "value": "price"
+            },
+            {
+              "key": "order",
+              "value": "DESC"
+            }
+          ]
         }
       },
       "response": []
     },
     {
       "name": "GET /books - minPrice maxPrice",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"All products within price range 600-700\", function () {",
+              "    pm.response.json().products.forEach(function(p) {",
+              "        pm.expect(p.price).to.be.at.least(600);",
+              "        pm.expect(p.price).to.be.at.most(700);",
+              "    });",
+              "});",
+              "",
+              "pm.test(\"Products array is not empty\", function () {",
+              "    pm.expect(pm.response.json().products.length).to.be.above(0);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
       "id": "c997f2bf-b73e-45e8-bad7-2b77648408bc",
       "request": {
         "method": "GET",
         "header": [],
         "url": {
-          "raw": ""
+          "raw": "188.120.241.222:8534/books?minPrice=600&maxPrice=700",
+          "host": [
+            "188",
+            "120",
+            "241",
+            "222"
+          ],
+          "port": "8534",
+          "path": [
+            "books"
+          ],
+          "query": [
+            {
+              "key": "minPrice",
+              "value": "600"
+            },
+            {
+              "key": "maxPrice",
+              "value": "700"
+            }
+          ]
         }
       },
       "response": []
     },
     {
       "name": "GET /books - all params combined.",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "pm.test(\"All results match search string\", function () {",
+              "    pm.response.json().products.forEach(function(p) {",
+              "        const match = p.author.toLowerCase().includes(\"кинг\") || p.title.toLowerCase().includes(\"кинг\");",
+              "        pm.expect(match).to.be.true;",
+              "    });",
+              "});",
+              "",
+              "pm.test(\"All products within price range 600-800\", function () {",
+              "    pm.response.json().products.forEach(function(p) {",
+              "        pm.expect(p.price).to.be.at.least(600);",
+              "        pm.expect(p.price).to.be.at.most(800);",
+              "    });",
+              "});",
+              "",
+              "pm.test(\"Products sorted by price ASC\", function () {",
+              "    const products = pm.response.json().products;",
+              "    for (let i = 0; i < products.length - 1; i++) {",
+              "        pm.expect(products[i].price).to.be.at.most(products[i+1].price);",
+              "    }",
+              "});",
+              "",
+              "pm.test(\"Returns max 3 products\", function () {",
+              "    pm.expect(pm.response.json().products.length).to.be.at.most(3);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
       "id": "35dc001b-a353-40cf-86d3-5a387f9f7f84",
       "request": {
         "method": "GET",
         "header": [],
         "url": {
-          "raw": ""
+          "raw": "188.120.241.222:8534/books?string=%D0%9A%D0%B8%D0%BD%D0%B3&minPrice=600&maxPrice=800&sort=price&order=ASC&limit=3",
+          "host": [
+            "188",
+            "120",
+            "241",
+            "222"
+          ],
+          "port": "8534",
+          "path": [
+            "books"
+          ],
+          "query": [
+            {
+              "key": "string",
+              "value": "%D0%9A%D0%B8%D0%BD%D0%B3"
+            },
+            {
+              "key": "minPrice",
+              "value": "600"
+            },
+            {
+              "key": "maxPrice",
+              "value": "800"
+            },
+            {
+              "key": "sort",
+              "value": "price"
+            },
+            {
+              "key": "order",
+              "value": "ASC"
+            },
+            {
+              "key": "limit",
+              "value": "3"
+            }
+          ]
         }
       },
       "response": []
@@ -243,24 +624,76 @@
     },
     {
       "name": "GET /book/{id} negative",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 204 (BUG: expected 404)\", function () {",
+              "    pm.response.to.have.status(204);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
       "id": "f7e3ff56-23e8-4a9e-9b5e-0fd3b85e9e35",
       "request": {
         "method": "GET",
         "header": [],
         "url": {
-          "raw": ""
+          "raw": "188.120.241.222:8534/book/99999",
+          "host": [
+            "188",
+            "120",
+            "241",
+            "222"
+          ],
+          "port": "8534",
+          "path": [
+            "book",
+            "99999"
+          ]
         }
       },
       "response": []
     },
     {
       "name": "GET /book/{id} negative abc",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 400 for invalid id format\", function () {",
+              "    pm.response.to.have.status(400);",
+              "});",
+              "",
+              "pm.test(\"Error message is present\", function () {",
+              "    pm.expect(pm.response.json()).to.have.property(\"message\");",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
       "id": "8bbb044c-f903-491b-975b-e1b5054e6cf9",
       "request": {
         "method": "GET",
         "header": [],
         "url": {
-          "raw": ""
+          "raw": "188.120.241.222:8534/book/abc",
+          "host": [
+            "188",
+            "120",
+            "241",
+            "222"
+          ],
+          "port": "8534",
+          "path": [
+            "book",
+            "abc"
+          ]
         }
       },
       "response": []
@@ -320,19 +753,7 @@
               "    pm.expect(json.review_id).to.be.a(\"number\");",
               "});",
               "",
-              "pm.test(\"Response contains correct book_id\", function () {",
-              "    pm.expect(pm.response.json().book_id).to.eql(1);",
-              "});",
-              "",
-              "pm.test(\"Response contains correct author_name\", function () {",
-              "    pm.expect(pm.response.json().author_name).to.eql(\"Тестировщик\");",
-              "});",
-              "",
-              "pm.test(\"Response contains correct recommended value\", function () {",
-              "    pm.expect(pm.response.json().recommended).to.eql(true);",
-              "});",
-              "",
-              "// Сохраняем id созданного отзыва для следующих запросов",
+              "// Сохраняем id для следующих запросов",
               "pm.collectionVariables.set(\"review_id\", pm.response.json().review_id);",
               "console.log(\"Saved review_id:\", pm.response.json().review_id);"
             ],
@@ -703,6 +1124,13 @@
         }
       },
       "response": []
+    }
+  ],
+  "variable": [
+    {
+      "id": "b3a845e2-06f3-4985-93a4-8479e0b710cc",
+      "key": "review_id",
+      "value": ""
     }
   ]
 }

@@ -906,14 +906,14 @@
         {
           "listen": "test",
           "script": {
+            "id": "46c043e4-89c5-4a2a-bd95-7087bc45cef8",
             "exec": [
               "pm.test(\"Status code is 200\", function () {",
               "    pm.response.to.have.status(200);",
               "});",
               "",
-              "pm.test(\"Response has discount field\", function () {",
-              "    const json = pm.response.json();",
-              "    pm.expect(json).to.have.property(\"discount\");",
+              "pm.test(\"Response has promo_discount field\", function () {",
+              "    pm.expect(pm.response.json()).to.have.property(\"promo_discount\");",
               "});",
               "",
               "pm.test(\"Discount is a positive number\", function () {",
@@ -921,7 +921,20 @@
               "});"
             ],
             "type": "text/javascript",
-            "id": "2e55302f-8691-4b64-963a-43e71213f0f5"
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "id": "52c8c938-a19f-48ef-b5b4-b59e8d804cf2",
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
           }
         }
       ],
@@ -989,9 +1002,10 @@
         {
           "listen": "test",
           "script": {
+            "id": "a4807f35-9b99-430e-8268-1ab035b647ce",
             "exec": [
-              "pm.test(\"Status code is 200\", function () {",
-              "    pm.response.to.have.status(200);",
+              "pm.test(\"Status code is 204\", function () {",
+              "    pm.response.to.have.status(204);",
               "});",
               "",
               "pm.test(\"Review text was updated\", function () {",
@@ -1003,7 +1017,20 @@
               "});"
             ],
             "type": "text/javascript",
-            "id": "c519c6cd-d369-4428-8b6e-fb2cbfb3e597"
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "id": "74855d87-1747-4232-ad6d-079d1e4d8bf5",
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
           }
         }
       ],
@@ -1043,27 +1070,51 @@
         {
           "listen": "test",
           "script": {
+            "id": "d58cbb42-1eb3-4e7b-b01a-31baffdf0f4b",
             "exec": [
               "pm.test(\"Status code is 200\", function () {",
               "    pm.response.to.have.status(200);",
               "});",
               "",
-              "pm.test(\"Response has all required fields\", function () {",
+              "pm.test(\"Response has reviews array and total_count\", function () {",
               "    const json = pm.response.json();",
-              "    pm.expect(json).to.have.property(\"id\");",
-              "    pm.expect(json).to.have.property(\"book_id\");",
-              "    pm.expect(json).to.have.property(\"author_name\");",
-              "    pm.expect(json).to.have.property(\"review_text\");",
-              "    pm.expect(json).to.have.property(\"recommended\");",
+              "    pm.expect(json).to.have.property(\"reviews\");",
+              "    pm.expect(json).to.have.property(\"total_count\");",
+              "});",
+              "",
+              "pm.test(\"Each review has required fields\", function () {",
+              "    pm.response.json().reviews.forEach(function(r) {",
+              "        pm.expect(r).to.have.property(\"review_id\");",
+              "        pm.expect(r).to.have.property(\"author_name\");",
+              "        pm.expect(r).to.have.property(\"text\");",
+              "        pm.expect(r).to.have.property(\"recommended\");",
+              "    });",
               "});",
               "",
               "pm.test(\"Review id matches requested id\", function () {",
               "    const reviewId = pm.collectionVariables.get(\"review_id\");",
-              "    pm.expect(pm.response.json().id).to.eql(reviewId);",
+              "    pm.expect(pm.response.json().review_id).to.eql(reviewId);",
+              "});",
+              "",
+              "pm.test(\"Response has author_name\", function () {",
+              "    pm.expect(pm.response.json()).to.have.property(\"author_name\");",
               "});"
             ],
             "type": "text/javascript",
-            "id": "b2600a85-766e-44f2-8cc9-1c8e2f2fab37"
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "id": "7f4bd435-4678-44c5-a1bb-a8d34e3c26ab",
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
           }
         }
       ],
@@ -1072,7 +1123,8 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "188.120.241.222:8534/review/{{review_id}}",
+          "raw": "http://188.120.241.222:8534/reviews/1",
+          "protocol": "http",
           "host": [
             "188",
             "120",
@@ -1081,8 +1133,8 @@
           ],
           "port": "8534",
           "path": [
-            "review",
-            "{{review_id}}"
+            "reviews",
+            "1"
           ]
         }
       },
@@ -1128,7 +1180,7 @@
   ],
   "variable": [
     {
-      "id": "89d5033c-d6f2-4d8e-8192-c339614f0652",
+      "id": "0e185a7d-7fbb-4917-96e7-47b374c13d16",
       "key": "review_id",
       "value": ""
     }

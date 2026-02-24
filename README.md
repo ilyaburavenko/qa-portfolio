@@ -41,31 +41,31 @@
 ## Сертификаты
 
 ### Тестирование ПО с Нуля до Специалиста — Stepik, 11.2024
-![Тестирование ПО с Нуля до Специалиста](./certificates/stepik-qa-specialist.png)
+![Тестирование ПО с Нуля до Специалиста](stepik-qa-specialist.png)
 
 ### Тренажёр по API «Битва покемонов» — QA Studio, 01.2025
-![Тренажёр по API Битва покемонов](./certificates/stepik-api-pokemon.png)
+![Тренажёр по API Битва покемонов](stepik-api-pokemon.png)
 
 ### Тестирование ПО с нуля. Теория + Практика. BASIC — Rusau, 10.2025
-![Тестирование ПО BASIC](./certificates/stepik-qa-basic.png)
+![Тестирование ПО BASIC](stepik-qa-basic.png)
 
 ### Docker для начинающих + практический опыт — Stepik, 12.2025
-![Docker для начинающих](./certificates/stepik-docker-practice.png)
+![Docker для начинающих](stepik-docker-practice.png)
 
 ### Знакомство с Docker — Stepik, 12.2025
-![Знакомство с Docker](./certificates/stepik-docker-intro.png)
+![Знакомство с Docker](stepik-docker-intro.png)
 
 ### Kubernetes для пользователей — Stepik, 12.2025
-![Kubernetes для пользователей](./certificates/stepik-kubernetes.png)
+![Kubernetes для пользователей](stepik-kubernetes.png)
 
 ### Системный администратор Linux с нуля — Selectel, 12.2025
-![Linux с нуля Selectel](./certificates/selectel-linux.png)
+![Linux с нуля Selectel](selectel-linux.png)
 
 ### Погружение в PostgreSQL — Selectel, 12.2025
-![Погружение в PostgreSQL](./certificates/selectel-postgresql.png)
+![Погружение в PostgreSQL](selectel-postgresql.png)
 
 ### Основы работы с Yandex Cloud — Yandex Cloud Training, 08.2025
-![Yandex Cloud](./certificates/yandex-cloud.jpg)
+![Yandex Cloud](yandex-cloud.jpg)
 
 ---
 

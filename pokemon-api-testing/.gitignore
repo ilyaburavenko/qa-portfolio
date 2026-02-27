@@ -1,0 +1,6 @@
+autotests/.venv/
+autotests/.env
+autotests/__pycache__/
+autotests/.pytest_cache/
+**/*.pyc
+.idea/

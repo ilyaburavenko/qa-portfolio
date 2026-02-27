@@ -1,8 +1,13 @@
 import pytest
 import requests
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 BASE_URL = "https://api.pokemonbattle.ru/v2"
-AUTH_TOKEN = "сюда_вставь_свой_auth_token"  # тот что получаешь после POST /v2/auth
+AUTH_TOKEN = os.environ.get("POKEMON_TOKEN", "")
+```
 
 @pytest.fixture(scope="session")
 def auth_headers():
@@ -15,12 +20,17 @@ def base_url():
 
 @pytest.fixture
 def created_pokemon(auth_headers, base_url):
-    """Создаёт покемона перед тестом и удаляет после (если нужно)"""
     response = requests.post(
         f"{base_url}/pokemons",
         headers=auth_headers,
-        json={"name": "Тестовый", "photo_id": 1}
+        json={"name": "generate", "photo_id": -1}  # generate чтобы имя не повторялось
     )
     assert response.status_code == 201, f"Не удалось создать покемона: {response.text}"
     pokemon_id = response.json()["id"]
     yield pokemon_id
+    # teardown — отправляем в нокаут после теста
+    requests.post(
+        f"{base_url}/pokemons/knockout",
+        headers=auth_headers,
+        json={"pokemon_id": pokemon_id}
+    )

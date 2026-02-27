@@ -1,6 +1,6 @@
 # QA Portfolio — Буравенко Илья
 
-**Контакты:** [Telegram](@iburavenko) | ilyaburavenko@yandex.ru | Новосибирск
+**Контакты:** [Telegram](https://t.me/iburavenko) | [ilyaburavenko@yandex.ru](mailto:ilyaburavenko@yandex.ru | Новосибирск
 
 ---
 
@@ -30,11 +30,21 @@
 - 47 тест-кейсов (поиск, корзина)
 - 8 задокументированных баг-репортов
 
-### 🎮 [ForwardTest](./forwardtest/)
+### 🎮 [ForwardTest](./forward-test/)
 Тестовое задание на позицию Junior QA — десктопный симулятор ПДД, метод чёрного ящика.
 
 - 22 тест-кейса (5 тест-сьютов)
 - 5 баг-репортов
+
+### 🎮 [Pokemon Battle API Testing](./pokemon-api-testing/)
+
+Тестирование учебного REST API покемон-игры. Ручное тестирование + автотесты на Python.
+
+- Postman-коллекция с assertions (21 запрос)
+- Автотесты: pytest + requests, 21 тест-кейс, 3 класса
+- Баг-репорты на найденные дефекты
+- Тест-кейсы и чек-листы
+
 
 ---
 
@@ -71,14 +81,11 @@
 
 ## Навыки
 
-**Тестирование:** функциональное, регрессионное, API, граничные значения, негативное, тест-дизайн
+| Категория | Инструменты |
+|-----------|-------------|
+| Тестирование | Функциональное, регрессионное, API, граничные значения |
+| Автоматизация | Python, pytest, requests |
+| Инструменты | Postman, Swagger, Jira, Confluence, Git |
+| БД | PostgreSQL, ClickHouse, SQL |
+| Мониторинг | Grafana, Kibana, Loki |
 
-**Инструменты:** Postman, Swagger, Jira, Confluence, Git, Chrome DevTools
-
-**БД:** PostgreSQL, ClickHouse, SQL
-
-**Инфраструктура:** Docker, Kubernetes, Linux, Yandex Cloud
-
-**Мониторинг:** Grafana, Kibana
-
-**Английский:** B2

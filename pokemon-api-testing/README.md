@@ -2,6 +2,7 @@
 
 Проект по тестированию учебного REST API [pokemonbattle.ru](https://pokemonbattle.ru).  
 Включает ручное тестирование (Postman), баг-репорты и автотесты на Python.
+Документация проекта: https://buildin.ai/qa-studio/share/f5875d3b-95ff-47d9-a9dc-dd56283f0c54
 
 ---
 

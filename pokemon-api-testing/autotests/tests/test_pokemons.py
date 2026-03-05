@@ -1,5 +1,8 @@
 import pytest
 import requests
+from pygments.lexers import data
+
+from conftest import auth_headers
 
 BASE_URL = "https://api.pokemonbattle.ru/v2"
 
@@ -223,3 +226,51 @@ class TestGetPokemonById:
         data = response.json()
         assert data["status"] == "error"
         assert data["message"] == "Покемон отсутствует"
+
+
+# ===== PUT /v2/trainers/edit_password — Смена пароля =====
+
+class TestPutChangePassword:
+
+    def test_put_change_password_success(self, auth_headers, base_url):
+        """Позитивный: смена пароля с валидными данными"""
+        response = requests.put(
+            f"{base_url}/trainers/edit_password",
+            headers={**auth_headers, "Content-Type": "application/json"},
+            json={"password_old": "Iloveqa2", "password_new": "Iloveqa1"}
+        )
+        assert response.status_code == 200
+        data = response.json()
+        assert data["message"] == "Успешная смена пароля"  # уточни по реальному ответу
+
+    def test_put_change_password_wrong_old_password(self, auth_headers, base_url):
+        """Негативный: смена пароля с невалидным старым паролем"""
+        response = requests.put(
+            f"{base_url}/trainers/edit_password",
+            headers={**auth_headers, "Content-Type": "application/json"},
+            json={"password_old": "Iloveqa2", "password_new": "Iloveqa1"}
+        )
+        assert response.status_code == 400
+        data = response.json()
+        assert data["status"] == "error"
+
+    def test_put_change_password_without_password_new(self, auth_headers, base_url):
+        """Негативный: неверный старый пароль и пустое поле password_new"""
+        response = requests.put(
+            f"{base_url}/trainers/edit_password",
+            headers={**auth_headers, "Content-Type": "application/json"},
+            json={"password_old": "123453456Il"}
+        )
+        assert response.status_code == 422
+        data = response.json()
+        assert data["status"] == "error"
+class TestGetTrainers:
+    def test_get_trainersb_success(self, auth_headers, base_url):
+        """Позитивный: получение списка тренеров"""
+        response = requests.get(
+            f"{base_url}/trainers",
+            headers=auth_headers
+        )
+        assert response.status_code == 200
+        data = response.json()
+        assert data["status"] == "success"

@@ -7,12 +7,12 @@ load_dotenv()
 
 BASE_URL = "https://api.pokemonbattle.ru/v2"
 AUTH_TOKEN = os.environ.get("POKEMON_TOKEN", "")
-```
+
 
 @pytest.fixture(scope="session")
 def auth_headers():
     """Заголовки с токеном авторизации — используются во всех тестах"""
-    return {"trainer_token": 'c037b656ce5d7b4cb87a26d260af5ff8'}
+    return {"trainer_token": AUTH_TOKEN}
 
 @pytest.fixture(scope="session")
 def base_url():
